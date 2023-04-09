@@ -5,15 +5,15 @@ public class Main {
     static final String DB_URL = "jdbc:postgresql://localhost:5432/postgres";
     static final String USER = "postgres";
      static final String PASS = "n550490162";
-    static final String QUERY1 = "SELECT id, login, fullname, email, age, gender FROM users";
+    static final String QUERY = "SELECT id, login, fullname, email, age, gender FROM users";
 
 
     public static void main(String[] args) {
         try(Connection conn = DriverManager.getConnection(DB_URL,USER,PASS);
         Statement stmt = conn.createStatement();
         ) {
-
-            ResultSet rs= stmt.executeQuery(QUERY1);
+            System.out.println("***BEFORE***");
+            ResultSet rs= stmt.executeQuery(QUERY);
 
                 while(rs.next()){
                 System.out.print("ID: " + rs.getInt(("id")));
@@ -23,12 +23,13 @@ public class Main {
                 System.out.print(", Email: " + rs.getString(("email")));
                 System.out.println(", Gender: " + rs.getString(("gender")));
             }
-            String sql = "DELETE FROM users WHERE id=3";
+            String sql = "DELETE FROM users WHERE id=5";
             stmt.executeUpdate(sql);
 
             System.out.println();
+            System.out.println("***AFTER***");
 
-            ResultSet rs1= stmt.executeQuery(QUERY1);
+            ResultSet rs1= stmt.executeQuery(QUERY);
 
             while(rs1.next()){
                 System.out.print("ID: " + rs1.getInt(("id")));
@@ -42,6 +43,6 @@ public class Main {
         }catch(SQLException e){
             e.printStackTrace();
         }
-        
+
     }
     }
